@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birth Certificate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #certificate {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #qrcode {
+            margin-top: 20px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Birth Certificate</h1>
+    <div id="certificate">
+        <!-- User data will be displayed here -->
+    </div>
+    <div id="qrcode"></div>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+   
+    <script>
+        // Retrieve and parse the stored JSON string from local storage
+        const formDataJson = localStorage.getItem('certificateData');
+        const formData = JSON.parse(formDataJson);
+
+        // Display user data on the certificate
+        const certificateDiv = document.getElementById('certificate');
+        certificateDiv.innerHTML = `
+            <p>Name: ${formData.fullName}</p>
+            <p>Gender: ${formData.gender}</p>
+            <p>Date of Birth: ${formData.dob}</p>
+            <p>Place of Birth: ${formData.placeOfBirth}</p>
+            <p>Name of Mother: ${formData.motherName}</p>
+            <p>Name of Father: ${formData.fatherName}</p>
+            <p>Address at Time of Birth: ${formData.addressParentsBirth}</p>
+            <p>Permanent Address of Parents: ${formData.permanentAddress}</p>
+            <p>Registration Number: ${formData.registrationNumber}</p>
+            <p>Date of Registration: ${formData.dateOfRegistration}</p>
+        `;
+
+        // Generate the QR code
+        const qrcode = new QRCode(document.getElementById('qrcode'), {
+            text: window.location.href,
+            width: 80,
+            height: 80,
+        });
+    </script>
+</body>
+</html>
+
+
+
+

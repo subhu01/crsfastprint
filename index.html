@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birth Certificate Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <h1>Birth Certificate Form</h1>
+    <form id="certificate-form">
+        <!-- Full Name -->
+        <label for="full-name">नाम / NAME:</label>
+        <input type="text" id="full-name" name="full-name" required>
+
+        <!-- Gender -->
+        <label for="gender">लिंग / SEX:</label>
+        <select id="gender" name="gender" required>
+            <option value="Male">पुरुष / MALE</option>
+            <option value="Female">महिला / FEMALE</option>
+        </select>
+
+        <!-- Date of Birth -->
+        <label for="dob">जन्म तिथि / DATE OF BIRTH:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <!-- Place of Birth -->
+        <label for="place-of-birth">जन्म स्थान / PLACE OF BIRTH:</label>
+        <input type="text" id="place-of-birth" name="place-of-birth" required>
+
+        <!-- Mother's Name -->
+        <label for="mother-name">माता का नाम / NAME OF MOTHER:</label>
+        <input type="text" id="mother-name" name="mother-name" required>
+
+        <!-- Father's Name -->
+        <label for="father-name">पिता का नाम / NAME OF FATHER:</label>
+        <input type="text" id="father-name" name="father-name" required>
+
+        <!-- Address of Parents at Time of Birth -->
+        <label for="address-parents-birth">बच्चे के जन्म के समय माता-पिता का पता / ADDRESS OF PARENTS AT THE TIME OF
+            BIRTH:</label>
+        <textarea id="address-parents-birth" name="address-parents-birth" required></textarea>
+
+        <!-- Permanent Address of Parents -->
+        <label for="permanent-address">माता-पिता के स्थायी पता / PERMANENT ADDRESS OF PARENTS:</label>
+        <textarea id="permanent-address" name="permanent-address" required></textarea>
+
+        <!-- Registration Number -->
+        <label for="registration-number">पंजीकरण संख्या / REGISTRATION NUMBER:</label>
+        <input type="text" id="registration-number" name="registration-number" required>
+
+        <!-- Date of Registration -->
+        <label for="date-of-registration">पंजीकरण तारीख / DATE OF REGISTRATION:</label>
+        <input type="date" id="date-of-registration" name="date-of-registration" required>
+
+        <button type="submit">Generate Certificate</button>
+
+    </form>
+    
+
+<script>
+    const form = document.getElementById('certificate-form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Retrieve form data
+        const fullName = document.getElementById('full-name').value;
+        const gender = document.getElementById('gender').value;
+        const dob = document.getElementById('dob').value;
+        const placeOfBirth = document.getElementById('place-of-birth').value;
+        const motherName = document.getElementById('mother-name').value;
+        const fatherName = document.getElementById('father-name').value;
+        const addressParentsBirth = document.getElementById('address-parents-birth').value;
+        const permanentAddress = document.getElementById('permanent-address').value;
+        const registrationNumber = document.getElementById('registration-number').value;
+        const dateOfRegistration = document.getElementById('date-of-registration').value;
+
+        // Create an object with the form data
+        const formData = {
+            fullName,
+            gender,
+            dob,
+            placeOfBirth,
+            motherName,
+            fatherName,
+            addressParentsBirth,
+            permanentAddress,
+            registrationNumber,
+            dateOfRegistration
+        };
+
+        // Convert the form data object to a JSON string
+        const formDataJson = JSON.stringify(formData);
+
+        // Store the JSON string in local storage
+        localStorage.setItem('certificateData', formDataJson);
+
+        // Redirect to the certificate page
+        window.location.href = 'certificate.html';
+    });
+</script>
+
+</body>
+
+</html>
