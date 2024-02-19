@@ -1,0 +1,26 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "auth/birthCertificate/view/cert/gpdh/*.html",
+        "use": "@vercel/static-build",
+        "config": {
+          "rewrites": [
+            {
+              "source": "/auth/birthCertificate/view/cert/gpdh/(.*)",
+              "destination": "/auth/birthCertificate/view/cert/gpdh/$1"
+            }
+          ]
+        }
+      },
+      {
+        "src": "rename-files.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      { "src": "/auth/birthCertificate/view/cert/gpdh/(.*)", "dest": "/auth/birthCertificate/view/cert/gpdh/$1" },
+      { "src": "/rename-files.js", "dest": "/rename-files.js" }
+    ]
+  }
+  
