@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "view.html",
+        "use": "@vercel/static-build",
+        "config": {
+          "rewrites": [
+            {
+              "source": "/view.html",
+              "destination": "/[randomParameter].html"
+            }
+          ]
+        }
+      }
+    ]
+  }
+  
