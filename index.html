@@ -116,18 +116,7 @@
   }
 
   // Function to view details in a new HTML page
-  function viewDetails(index) {
-    const selectedData = data[index];
-
-    // Generate a unique ID for the new page
-    const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
-    
-    // Create a URL with parameters for the data
-    const url = `https://crsfast.vercel.app/view.html?id=${uniqueId}&name=${encodeURIComponent(selectedData.name)}&email=${encodeURIComponent(selectedData.email)}`;
-
-    // Open the URL in a new window
-    const newWindow = window.open(url, '_blank');
-  }
+  
 
   // jQuery function to handle form submission
   $(document).ready(function () {
