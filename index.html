@@ -1,108 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birth Certificate Form</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Table Example</title>
+  <!-- Bootstrap CSS link -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
 
-    <h1>Birth Certificate Form</h1>
-    <form id="certificate-form">
-        <!-- Full Name -->
-        <label for="full-name">नाम / NAME:</label>
-        <input type="text" id="full-name" name="full-name" required>
+<div class="container mt-5">
+  <div class="mb-3">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+    <button class="btn btn-danger" onclick="removeRow()">Remove</button>
+  </div>
 
-        <!-- Gender -->
-        <label for="gender">लिंग / SEX:</label>
-        <select id="gender" name="gender" required>
-            <option value="Male">पुरुष / MALE</option>
-            <option value="Female">महिला / FEMALE</option>
-        </select>
+  <!-- Table to display the data -->
+  <table class="table table-bordered" id="dataTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data will be added dynamically here -->
+    </tbody>
+  </table>
+</div>
 
-        <!-- Date of Birth -->
-        <label for="dob">जन्म तिथि / DATE OF BIRTH:</label>
-        <input type="date" id="dob" name="dob" required>
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add Personal Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Data</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- Place of Birth -->
-        <label for="place-of-birth">जन्म स्थान / PLACE OF BIRTH:</label>
-        <input type="text" id="place-of-birth" name="place-of-birth" required>
-
-        <!-- Mother's Name -->
-        <label for="mother-name">माता का नाम / NAME OF MOTHER:</label>
-        <input type="text" id="mother-name" name="mother-name" required>
-
-        <!-- Father's Name -->
-        <label for="father-name">पिता का नाम / NAME OF FATHER:</label>
-        <input type="text" id="father-name" name="father-name" required>
-
-        <!-- Address of Parents at Time of Birth -->
-        <label for="address-parents-birth">बच्चे के जन्म के समय माता-पिता का पता / ADDRESS OF PARENTS AT THE TIME OF
-            BIRTH:</label>
-        <textarea id="address-parents-birth" name="address-parents-birth" required></textarea>
-
-        <!-- Permanent Address of Parents -->
-        <label for="permanent-address">माता-पिता के स्थायी पता / PERMANENT ADDRESS OF PARENTS:</label>
-        <textarea id="permanent-address" name="permanent-address" required></textarea>
-
-        <!-- Registration Number -->
-        <label for="registration-number">पंजीकरण संख्या / REGISTRATION NUMBER:</label>
-        <input type="text" id="registration-number" name="registration-number" required>
-
-        <!-- Date of Registration -->
-        <label for="date-of-registration">पंजीकरण तारीख / DATE OF REGISTRATION:</label>
-        <input type="date" id="date-of-registration" name="date-of-registration" required>
-
-        <button type="submit">Generate Certificate</button>
-
-    </form>
-    
-
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    const form = document.getElementById('certificate-form');
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
+  // Array to store data
+  let data = [];
 
-        // Retrieve form data
-        const fullName = document.getElementById('full-name').value;
-        const gender = document.getElementById('gender').value;
-        const dob = document.getElementById('dob').value;
-        const placeOfBirth = document.getElementById('place-of-birth').value;
-        const motherName = document.getElementById('mother-name').value;
-        const fatherName = document.getElementById('father-name').value;
-        const addressParentsBirth = document.getElementById('address-parents-birth').value;
-        const permanentAddress = document.getElementById('permanent-address').value;
-        const registrationNumber = document.getElementById('registration-number').value;
-        const dateOfRegistration = document.getElementById('date-of-registration').value;
+  // Function to add data to the table
+  function addData(name, email) {
+    data.push({ name, email });
+    updateTable();
+  }
 
-        // Create an object with the form data
-        const formData = {
-            fullName,
-            gender,
-            dob,
-            placeOfBirth,
-            motherName,
-            fatherName,
-            addressParentsBirth,
-            permanentAddress,
-            registrationNumber,
-            dateOfRegistration
-        };
+  // Function to remove selected rows from the table
+  function removeRow() {
+    const table = document.getElementById('dataTable');
+    const checkboxes = table.querySelectorAll('tbody input[type="checkbox"]:checked');
 
-        // Convert the form data object to a JSON string
-        const formDataJson = JSON.stringify(formData);
-
-        // Store the JSON string in local storage
-        localStorage.setItem('certificateData', formDataJson);
-
-        // Redirect to the certificate page
-        window.location.href = 'certificate.html';
+    checkboxes.forEach((checkbox) => {
+      const rowIndex = checkbox.parentNode.parentNode.rowIndex - 1;
+      data.splice(rowIndex, 1);
     });
+
+    updateTable();
+  }
+
+  // Function to update the table with the latest data
+  function updateTable() {
+    const tableBody = document.querySelector('#dataTable tbody');
+    tableBody.innerHTML = '';
+
+    data.forEach((item, index) => {
+      const row = tableBody.insertRow();
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+
+      cell1.textContent = item.name;
+      cell2.textContent = item.email;
+
+      // Add View button for each row
+      const viewButton = document.createElement('button');
+      viewButton.className = 'btn btn-info btn-sm';
+      viewButton.textContent = 'View';
+      viewButton.onclick = function () {
+        viewDetails(index);
+      };
+
+      cell3.appendChild(viewButton);
+
+      // Add checkbox for row selection
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.name = 'rowCheckbox';
+      checkbox.value = index;
+      cell3.appendChild(checkbox);
+    });
+  }
+
+  // Function to view details in a new HTML page
+  function viewDetails(index) {
+    const selectedData = data[index];
+
+    // Generate a unique ID for the new page
+    const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+    
+    // Create a URL with parameters for the data
+    const url = `https://crsfast.vercel.app/view.html?id=${uniqueId}&name=${encodeURIComponent(selectedData.name)}&email=${encodeURIComponent(selectedData.email)}`;
+
+    // Open the URL in a new window
+    const newWindow = window.open(url, '_blank');
+  }
+
+  // jQuery function to handle form submission
+  $(document).ready(function () {
+    $('#addForm').submit(function (e) {
+      e.preventDefault();
+      const name = $('#name').val();
+      const email = $('#email').val();
+      addData(name, email);
+      $('#addModal').modal('hide');
+      // Clear the form after submission
+      $(this).trigger("reset");
+    });
+  });
 </script>
-
 </body>
-
 </html>
