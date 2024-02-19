@@ -7,7 +7,7 @@
         "config": {
           "rewrites": [
             {
-              "source": "/index.html",
+              "source": "/view.html",
               "destination": "/[randomParameter].html"
             }
           ]
